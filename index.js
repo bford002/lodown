@@ -136,10 +136,9 @@ function contains(arr, value){
 
 /**
  * each: Designed to loop over a collection, Array or Object, and applies the 
- * action Function to each value in the collection.
- * 
+ * func Function to each value in the collection.
  * @param {Array or Object} collection: The collection over which to iterate.
- * @param {Function} action: The Function to be applied to each value in the 
+ * @param {Function} func: The Function to be applied to each value in the 
  * collection
  */
 function each(collection, func) {
@@ -155,7 +154,8 @@ function each(collection, func) {
 }
 
 /**
- * unique: Designed to iterate through an array and return a new array with duplicate values removed.
+ * unique: Designed to iterate through an array and return a new array with 
+ * duplicate values removed.
  * @param {an array} arr: The array to be interated through
  * @returns {new array} a new array with duplicates removed
  */
@@ -170,8 +170,88 @@ function unique(arr) {
 }
 
 /**
- * filter:
+ * filter: Designed to interate through an array and apply a function to each 
+ * element in the array, returning a new array of elements for which the called 
+ * function returned true.
+ * @param {an array} arr: The array to be iterated through
+ * @param {a function} func: Function to be applied to each element of the array
+ * @returns {new array} a new array of elements for which calling the function returned true
  */
+function filter(arr, func) {
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (func(arr[i], i, arr) === true) {
+            newArr.push(arr[i]);
+        }
+    }
+    return newArr;
+}
 
+/**
+ * reject: Designed to interate through an array and apply a function to each 
+ * element in the array, returning a new array of elements for which the called 
+ * function returned false.
+ * @param {an array} arr: The array to be iterated through
+ * @param {a function} func: Function to be applied to each element of the array
+ * @returns {new array} a new array of elements for which calling the function returned false
+ */
+function reject(arr, func) {
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (func(arr[i], i, arr) === false) {
+            newArr.push(arr[i]);
+        }
+    }
+    return newArr;
+}
+
+/**
+ * partition: Designed to interate through an array and apply a function to each 
+ * element in the array, returning a new array of sub arrays of elements for which the called 
+ * function returned true or false.
+ * @param {an array} arr: The array to be iterated through
+ * @param {a function} func: Function to be applied to each element of the array
+ * @returns {new array of sub arrays} a new array of sub arrays of elements for which calling the function returned true or false
+ */
+function partition(arr, func) {
+    let newArr = [[], []];
+    for (let i = 0; i < arr.length; i++) {
+        if (func(arr[i], i, arr) === true) {
+            newArr[0].push(arr[i]);
+        } else if (func(arr[i], i, arr) === false) {
+            newArr[1].push(arr[i]);
+        }
+    }
+    return newArr;
+}
+
+/**
+ * map: Designed to loop over a collection, Array or Object, and applies the 
+ * func Function to each value in the collection. It returns a new array containing 
+ * the returned values of the func Function called on each element of collection.
+ * @param {Array or Object} collection: The collection over which to iterate.
+ * @param {Function} func: The Function to be applied to each value in the 
+ * collection
+ * @returns {a new array} a new array of the returned values of the func function called on each element of collection.
+ */
+function map(collection, func) {
+    var outputArr = [];
+if(Array.isArray(collection)){
+for(var i = 0; i < collection.length; i++){
+    var result = func(collection[i], i, collection); 
+    outputArr.push(result);
+}
+} else {
+for (var key in collection) {
+    var result = func(collection[key], key, collection);
+    outputArr.push(result);
+}
+}
+return outputArr;
+}
+
+/**
+ * pluck:
+ */
 
 
