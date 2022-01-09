@@ -33,6 +33,7 @@ module.exports.each = each;
 function identity(value) {
     return value;
 }
+module.exports.identity = identity;
 
 /**
  * typeOf: Function takes a parameter of any value and returns the type of value as a string.
@@ -47,6 +48,7 @@ function typeOf(value) {
     }
     return typeof value;
 }
+module.exports.typeOf = typeOf;
 
 /**
  * first: Determines if an array is an array and if a number is given and is a number 
@@ -73,6 +75,7 @@ function first(arr, num) {
         }
     return [];
     }
+module.exports.first = first;
 
 /**
  * last: Determines if an array is an array and if a number is given and is a number 
@@ -99,6 +102,7 @@ function last(arr, num){
         }
     return [];
 }
+module.exports.last = last;
 
 /**
  * indexOf: Designed to iterate through an array and return the array's index depending on if a value 
@@ -116,6 +120,7 @@ function indexOf(arr, value){
     }
     return -1;
 }
+module.exports.indexOf = indexOf;
 
 /**
  * contains: Designed to iterate through an array and return a Boolean depending on if a value 
@@ -133,6 +138,7 @@ function contains(arr, value){
     }
     return false;
 }
+module.exports.contains = contains;
 
 /**
  * each: Designed to loop over a collection, Array or Object, and applies the 
@@ -152,6 +158,7 @@ function each(collection, func) {
         }
     }
 }
+module.exports.each = each;
 
 /**
  * unique: Designed to iterate through an array and return a new array with 
@@ -168,6 +175,7 @@ function unique(arr) {
     }
   return newArr;
 }
+module.exports.unique = unique;
 
 /**
  * filter: Designed to interate through an array and apply a function to each 
@@ -186,6 +194,7 @@ function filter(arr, func) {
     }
     return newArr;
 }
+module.exports.filter = filter;
 
 /**
  * reject: Designed to interate through an array and apply a function to each 
@@ -204,6 +213,7 @@ function reject(arr, func) {
     }
     return newArr;
 }
+module.exports.reject = reject;
 
 /**
  * partition: Designed to interate through an array and apply a function to each 
@@ -224,14 +234,14 @@ function partition(arr, func) {
     }
     return newArr;
 }
+module.exports.partition = partition;
 
 /**
  * map: Designed to loop over a collection, Array or Object, and applies the 
  * func Function to each value in the collection. It returns a new array containing 
  * the returned values of the func Function called on each element of collection.
  * @param {Array or Object} collection: The collection over which to iterate.
- * @param {Function} func: The Function to be applied to each value in the 
- * collection
+ * @param {Function} func: The function to be applied to each value in the collection.
  * @returns {a new array} a new array of the returned values of the func function called on each element of collection.
  */
 function map(collection, func) {
@@ -249,9 +259,163 @@ for (var key in collection) {
 }
 return outputArr;
 }
+module.exports.map = map;
 
 /**
- * pluck:
+ * pluck: Designed to use the .map function on an array and return a new array with every element
+ * being the value of a property input.
+ * @param {Array of objects} array: array to have the .map function acted upon
+ * @param {Property} prop: the value to be returned for each element of the new array
+ * @returns {a new array} a new array containing the value of the property input for each element
  */
+ function pluck(array, prop){
+    let arr = [];
+      array.map(function(array){
+          for (var key in array){
+              if(key === prop){
+                  arr.push(array[key]);
+              }
+          }
+      })
+    return arr;
+}
+module.exports.pluck = pluck;
 
+/**
+ * every: Designed to loop over a collection, Array or Object, and applies the func Function to 
+ * each value in the collection. It returns a boolean value depending on if the func function applied
+ * to the collection returns true or false. If the return value of calling func for every element is true, return true.
+ * If even one of them returns false, return false
+ * @param {Array or Object} collection: The collection over which to iterate.
+ * @param {Function} func: The function to be applied to each value in the collection.
+ * @returns {Boolean} true or false.
+ */
+ function every(collection, func) {
+    if (func) {
+        if (Array.isArray(collection)) {
+            for (let i = 0;i < collection.length; i++) {
+                func(collection[i], i, collection);
+                if (func(collection[i], i, collection) === false) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            for (var key in collection) {
+                func(collection[key], key, collection);
+                if (func(collection[key], key, collection) === false) {
+                    return false;
+                } 
+            }
+            return true;
+        }
+    } else {
+        if (Array.isArray(collection)) {
+            for (let i = 0;i < collection.length; i++) {
+                if (collection[i] === false) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            for (var key in collection) {
+                if (collection[key] === false) {
+                    return false;
+                } 
+            }
+            return true;
+        }
+    }
+}
+
+module.exports.every = every;
+
+/**
+ * some: Designed to loop over a collection, Array or Object, and applies the func Function to 
+ * each value in the collection. It returns a boolean value depending on if the func function applied
+ * to the collection returns true or false. If the return value of calling func is true for at least one element, return true. 
+ * If it is false for all elements, return false
+ * @param {Array or Object} collection: The collection over which to iterate.
+ * @param {Function} func: The function to be applied to each value in the collection.
+ * @returns {Boolean} true or false.
+ */
+ function some(collection, func) {
+    if (func) {
+        if (Array.isArray(collection)) {
+            for (let i = 0;i < collection.length; i++) {
+                func(collection[i], i, collection);
+                if (func(collection[i], i, collection) === true) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            for (var key in collection) {
+                func(collection[key], key, collection);
+                if (func(collection[key], key, collection) === true) {
+                    return true;
+                } 
+            }
+            return false;
+        }
+    } else {
+        if (Array.isArray(collection)) {
+            for (let i = 0;i < collection.length; i++) {
+                if (collection[i] === true) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            for (var key in collection) {
+                if (collection[key] === true) {
+                    return true;
+                } 
+            }
+            return false;
+        }
+    }
+}
+
+module.exports.some = some;
+
+/**
+ * reduce: Designed to call a function on every element of an array, passing the return value of that function call 
+ * on the preceeding element. The final return value is a single value of all the function calls within.
+ * @param {Array} array: The arary to be iterated through and to have the function called on each of its elements.
+ * @param {Function} func: The function to be called on each element in the array.
+ * @param {Seed Value} seed: The starting value before the function is called.
+ * @returns {Seed Value} returns the final value of seed after the function has been called on every element.
+ */
+ function reduce(array, func, seed) {
+    if (seed === undefined) {
+        seed = array[0];
+        for (let i = 1; i < array.length; i++) {
+            seed = func(seed, array[i], i);
+        }
+    } else {
+        for (let i = 0; i < array.length; i++) {
+            seed = func(seed, array[i], i);
+        }
+    }
+    return seed;
+}
+
+module.exports.reduce = reduce;
+
+/**
+ * extend: Designed to copy properties from one object to another and return the first object updated. Can take in 
+ * as many objects as necessary.
+ * @param {An Object} object1: The first object to be updated and returned.
+ * @param {An Object, maybe more} object2: The second object that will have its properties copied the the first object.
+ * @returns {An Object} object1 after being updated with the copied properties.
+ */
+ function extend(...args) {
+    return args.reduce(function(object1, object2){
+        Object.assign(object1, object2);
+        return object1;
+    });
+}
+
+module.exports.extend = extend;
 
