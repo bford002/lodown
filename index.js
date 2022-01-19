@@ -52,7 +52,8 @@ module.exports.typeOf = typeOf;
 
 /**
  * first: Determines if an array is an array and if a number is given and is a number 
- * or greater than the length of the array.
+ * or greater than the length of the array. It will return the "first" number of elements in the array
+ * specified by the input number.
  * @param {an array} arr: The array to be determined as an array or not.
  * @param {a number} num: The number to be determined as defined, greater than array.length, 
  * or a negative number.
@@ -79,7 +80,8 @@ module.exports.first = first;
 
 /**
  * last: Determines if an array is an array and if a number is given and is a number 
- * or greater than the length of the array.
+ * or greater than the length of the array. It will return the "last" number of elements in the array 
+ * specified by the number input.
  * @param {an array} arr: The array to be determined as an array or not.
  * @param {a number} num: The number to be determined as defined, greater than array.length, 
  * or a negative number.
@@ -218,7 +220,8 @@ module.exports.reject = reject;
 /**
  * partition: Designed to interate through an array and apply a function to each 
  * element in the array, returning a new array of sub arrays of elements for which the called 
- * function returned true or false.
+ * function returned true or false. The output array is a nested array, containing sub arrays.
+ * The array at the 0 index contains the values that return true; the 1 index contains the values that return false.
  * @param {an array} arr: The array to be iterated through
  * @param {a function} func: Function to be applied to each element of the array
  * @returns {new array of sub arrays} a new array of sub arrays of elements for which calling the function returned true or false
